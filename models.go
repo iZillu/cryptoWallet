@@ -3,7 +3,7 @@ package cryptoWallet
 import "time"
 
 type User struct {
-	ID         int64  `json:"-"`
+	ID         int64  `json:"-" db:"id"`
 	Name       string `json:"name" binding:"required"`
 	Surname    string `json:"surname" binding:"required"`
 	Email      string `json:"email" binding:"required"`

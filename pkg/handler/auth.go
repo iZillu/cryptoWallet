@@ -1,7 +1,7 @@
 package handler
 
 import (
-	cryptoWallet "github.com/iZillu/cryptoWallet"
+	"github.com/iZillu/cryptoWallet"
 	"github.com/labstack/echo"
 	"github.com/rs/zerolog/log"
 	"net/http"
@@ -28,9 +28,27 @@ func (h *Handler) signUp(c echo.Context) error {
 	})
 }
 
+// TODO: add ban for 3 minutes
 func (h *Handler) signIn(c echo.Context) error {
+	var input struct {
+		Email    string `json:"email" binding:"required"`
+		Password string `json:"password" binding:"required"`
+	}
 
-	return nil
+	if err := c.Bind(&input); err != nil {
+		log.Error().Err(err).Msg("signUp: binding user:")
+		return err
+	}
+
+	token, err := h.Service.Authorization.GenerateToken(input.Email, input.Password)
+	if err != nil {
+		log.Error().Err(err).Msg("signUp:")
+		return err
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"token": token,
+	})
 }
 
 func (h *Handler) verifyEmail(c echo.Context) error {

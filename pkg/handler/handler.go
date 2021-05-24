@@ -23,7 +23,7 @@ func (h *Handler) InitRoutes() *echo.Echo {
 		auth.POST("/verify-email", h.verifyEmail)
 	}
 
-	api := server.Group("/api")
+	api := server.Group("/api", h.UserIdentity)
 	{
 		api.GET("/get-wallets", h.getWallets)
 		api.POST("/make-transaction", h.makeTransaction)

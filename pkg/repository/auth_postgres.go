@@ -25,3 +25,12 @@ func (r *AuthPostgres) CreateUser(user cryptoWallet.User) (int64, error) {
 
 	return id, nil
 }
+
+func (r *AuthPostgres) GetUser(email, password string) (cryptoWallet.User, error) {
+	var user cryptoWallet.User
+
+	query := fmt.Sprintf("SELECT id FROM %s WHERE email=$1 AND password=$2", usersTable)
+	err := r.db.Get(&user, query, email, password)
+
+	return user, err
+}

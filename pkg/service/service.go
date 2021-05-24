@@ -7,6 +7,8 @@ import (
 
 type Authorization interface {
 	CreateUser(user cryptoWallet.User) (int64, error)
+	GenerateToken(email, password string) (string, error)
+	ParseToken(token string) (int64, error)
 }
 
 type Service struct {

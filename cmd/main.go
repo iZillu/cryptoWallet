@@ -48,8 +48,8 @@ func main() {
 	//	Output:           myEcho.Logger.Output(),
 	//	CustomTimeFormat: "2 Jan 15:04:05",
 	//}))
-
 	serv := new(cryptoWallet.Server)
+	//myEcho.Use(handlers.UserIdentity)
 
 	if err := serv.Start(viper.GetString("port"), myEcho); err != nil {
 		log.Fatal().Err(err).Msg("cryptoWallet starting")
